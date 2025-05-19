@@ -1,0 +1,775 @@
+:root {
+    /* Light theme colors */
+    --bg-gradient-start: #f5f7fa;
+    --bg-gradient-end: #c3cfe2;
+    --card-front-bg-start: #ffffff;
+    --card-front-bg-end: #f8f9fa;
+    --card-back-bg-start: #f8f9fa;
+    --card-back-bg-end: #ffffff;
+    --card-text: #333;
+    --btn-know-start: #4776E6;
+    --btn-know-end: #8E54E9;
+    --btn-dont-know-start: #11998e;
+    --btn-dont-know-end: #38ef7d;
+    --progress-bg: #e9ecef;
+    --progress-bar-start: #667eea;
+    --progress-bar-end: #764ba2;
+    --counter-text: #6c757d;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --card-glow-front: rgba(255, 123, 172, 0.3);
+    --card-glow-back: rgba(73, 90, 255, 0.3);
+    --nav-btn-color: #6c757d;
+    --nav-btn-hover: #343a40;
+    --nav-btn-disabled: #ced4da;
+    /* Border animation colors - Light theme */
+    --border-color-1: #4776E6;
+    --border-color-2: #8E54E9;
+    --border-color-3: #11998e;
+    --border-color-4: #38ef7d;
+    --progress-bar-start-rgb: 102, 126, 234;
+    --progress-bar-end-rgb: 118, 75, 162;
+    --animated-bg: radial-gradient(circle at 10% 20%, rgba(71, 118, 230, 0.1) 0%, rgba(142, 84, 233, 0.1) 90%), 
+                   radial-gradient(circle at 80% 70%, rgba(17, 153, 142, 0.1) 0%, rgba(56, 239, 125, 0.1) 90%);
+    --bg-gradient-start-rgb: 245, 247, 250;
+    --bg-gradient-end-rgb: 195, 207, 226;
+}
+
+[data-theme="dark"] {
+    /* Dark theme colors */
+    --bg-gradient-start: #121212;
+    --bg-gradient-end: #2d3436;
+    --card-front-bg-start: #2d3436;
+    --card-front-bg-end: #1e272e;
+    --card-back-bg-start: #1e272e;
+    --card-back-bg-end: #2d3436;
+    --card-text: #e2e2e2;
+    --btn-know-start: #8A2387;
+    --btn-know-end: #E94057;
+    --btn-dont-know-start: #4b6cb7;
+    --btn-dont-know-end: #182848;
+    --progress-bg: #2d3436;
+    --progress-bar-start: #6c5ce7;
+    --progress-bar-end: #e84393;
+    --counter-text: #a4b0be;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --card-glow-front: rgba(232, 67, 147, 0.3);
+    --card-glow-back: rgba(108, 92, 231, 0.3);
+    --nav-btn-color: #a4b0be;
+    --nav-btn-hover: #dfe6e9;
+    --nav-btn-disabled: #636e72;
+    /* Border animation colors - Dark theme */
+    --border-color-1: #8A2387;
+    --border-color-2: #E94057;
+    --border-color-3: #4b6cb7;
+    --border-color-4: #182848;
+    --progress-bar-start-rgb: 108, 92, 231;
+    --progress-bar-end-rgb: 232, 67, 147;
+    --animated-bg: radial-gradient(circle at 10% 20%, rgba(138, 35, 135, 0.15) 0%, rgba(233, 64, 87, 0.15) 90%), 
+                  radial-gradient(circle at 80% 70%, rgba(75, 108, 183, 0.15) 0%, rgba(24, 40, 72, 0.15) 90%);
+    --bg-gradient-start-rgb: 18, 18, 18;
+    --bg-gradient-end-rgb: 45, 52, 54;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    transition: background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: var(--animated-bg);
+    opacity: 0.4;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(var(--bg-gradient-start-rgb), 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--counter-text);
+    transition: fill 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg);
+}
+
+.theme-toggle:active {
+    transform: rotate(30deg);
+}
+
+[data-theme="light"] .moon-icon {
+    display: block;
+}
+
+[data-theme="light"] .sun-icon {
+    display: none;
+}
+
+[data-theme="dark"] .moon-icon {
+    display: none;
+}
+
+[data-theme="dark"] .sun-icon {
+    display: block;
+}
+
+.flashcard-wrapper {
+    width: 100%;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    animation: cardEntrance 0.5s ease-out 0.1s both;
+}
+
+/* Animated border effect */
+.flashcard-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 22px;
+    background: linear-gradient(
+        45deg, 
+        var(--border-color-1), 
+        var(--border-color-2), 
+        var(--border-color-3), 
+        var(--border-color-4), 
+        var(--border-color-1)
+    );
+    background-size: 400% 400%;
+    animation: borderGradient 8s ease infinite;
+    filter: blur(2px);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.flashcard-wrapper:hover::before {
+    opacity: 1;
+    filter: blur(1.5px);
+}
+
+@keyframes borderGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.flashcard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--card-shadow);
+    background-color: transparent;
+    z-index: 1;
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: var(--card-text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.flashcard-front {
+    background: linear-gradient(135deg, var(--card-front-bg-start) 0%, var(--card-front-bg-end) 100%);
+}
+
+.flashcard-back {
+    background: linear-gradient(135deg, var(--card-back-bg-start) 0%, var(--card-back-bg-end) 100%);
+    transform: rotateY(180deg);
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--card-shadow);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+}
+
+/* Button click ripple effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn:active::after {
+    animation: ripple 0.5s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0) translate(-50%, -50%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20) translate(-50%, -50%);
+        opacity: 0;
+    }
+}
+
+.btn-know {
+    background: linear-gradient(135deg, var(--btn-know-start) 0%, var(--btn-know-end) 100%);
+}
+
+.btn-dont-know {
+    background: linear-gradient(135deg, var(--btn-dont-know-start) 0%, var(--btn-dont-know-end) 100%);
+}
+
+.btn-okay {
+    background: linear-gradient(135deg, var(--progress-bar-start) 0%, var(--progress-bar-end) 100%);
+    transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.progress {
+    width: 100%;
+    height: 6px;
+    background-color: var(--progress-bg);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, var(--progress-bar-start) 0%, var(--progress-bar-end) 100%);
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+        -45deg, 
+        rgba(255, 255, 255, 0.2) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.2) 75%, 
+        transparent 75%, 
+        transparent
+    );
+    background-size: 30px 30px;
+    animation: progressStripes 1s linear infinite;
+    z-index: 1;
+}
+
+@keyframes progressStripes {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 30px 0;
+    }
+}
+
+.progress-bar.completed {
+    animation: progressComplete 1.5s ease infinite;
+    background: linear-gradient(
+        45deg, 
+        var(--border-color-1),
+        var(--border-color-2),
+        var(--border-color-3),
+        var(--border-color-4),
+        var(--border-color-1)
+    );
+    background-size: 400% 400%;
+}
+
+@keyframes progressComplete {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.counter {
+    font-size: 14px;
+    color: var(--counter-text);
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Glow effect */
+.flashcard-wrapper:hover .flashcard:not(.flipped) {
+    box-shadow: 0 0 30px var(--card-glow-front);
+}
+
+.flashcard-wrapper:hover .flashcard.flipped {
+    box-shadow: 0 0 30px var(--card-glow-back);
+}
+
+.navigation {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--nav-btn-color);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-btn:hover {
+    transform: scale(1.2);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn:disabled {
+    color: var(--nav-btn-disabled);
+    cursor: not-allowed;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reset-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.reset-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--counter-text);
+    transition: fill 0.3s ease;
+}
+
+.reset-btn:hover {
+    transform: rotate(180deg);
+}
+
+/* Add animation for completion feedback */
+@keyframes celebrate {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.progress-bar.completed {
+    animation: progressComplete 1.5s ease infinite, celebrate 0.5s ease-in-out 1;
+    background: linear-gradient(
+        45deg, 
+        var(--border-color-1),
+        var(--border-color-2),
+        var(--border-color-3),
+        var(--border-color-4),
+        var(--border-color-1)
+    );
+    background-size: 400% 400%;
+}
+
+.completion-card {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--card-front-bg-start) 0%, var(--card-front-bg-end) 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--card-shadow);
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+    color: var(--card-text);
+    animation: appear 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.completion-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 22px;
+    background: linear-gradient(
+        45deg, 
+        var(--border-color-1), 
+        var(--border-color-2), 
+        var(--border-color-3), 
+        var(--border-color-4), 
+        var(--border-color-1)
+    );
+    background-size: 400% 400%;
+    animation: borderGradient 8s ease infinite;
+    filter: blur(3px);
+    opacity: 1;
+}
+
+.completion-icon {
+    font-size: 50px;
+    animation: bounce 2s ease infinite;
+}
+
+.completion-card h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.completion-card p {
+    font-size: 18px;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.btn-restart {
+    background: linear-gradient(135deg, var(--progress-bar-start) 0%, var(--progress-bar-end) 100%);
+    margin-top: 10px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Add this to your CSS for the review mode progress bar */
+.progress-bar.review-mode {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--progress-bar-start),
+        var(--progress-bar-start) 10px,
+        var(--progress-bar-end) 10px,
+        var(--progress-bar-end) 20px
+    );
+    animation: progressReview 20s linear infinite;
+}
+
+@keyframes progressReview {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 500px 0;
+    }
+}
+
+/* Add this to your CSS file for styling the progress count */
+.progress-count {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 1px 6px;
+    background: rgba(var(--progress-bar-start-rgb, 102, 126, 234), 0.15);
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--progress-bar-start);
+    transition: all 0.3s ease;
+}
+
+.progress-count.updated {
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Add floating bubbles */
+.bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: linear-gradient(
+        45deg,
+        var(--border-color-1),
+        var(--border-color-2)
+    );
+    opacity: 0.15;
+    animation: float 10s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bubble:nth-child(1) {
+    width: 80px;
+    height: 80px;
+    left: 10%;
+    top: 20%;
+    animation-delay: 0s;
+    animation-duration: 31s;
+}
+
+.bubble:nth-child(2) {
+    width: 65px;
+    height: 65px;
+    left: 80%;
+    top: 60%;
+    animation-delay: 2s;
+    animation-duration: 37s;
+}
+
+.bubble:nth-child(3) {
+    width: 100px;
+    height: 100px;
+    left: 30%;
+    top: 70%;
+    animation-delay: 5s;
+    animation-duration: 43s;
+}
+
+.bubble:nth-child(4) {
+    width: 50px;
+    height: 50px;
+    left: 60%;
+    top: 15%;
+    animation-delay: 8s;
+    animation-duration: 29s;
+}
+
+.bubble:nth-child(5) {
+    width: 120px;
+    height: 120px;
+    left: 5%;
+    top: 70%;
+    animation-delay: 11s;
+    animation-duration: 47s;
+}
+
+.bubble:nth-child(6) {
+    width: 90px;
+    height: 90px;
+    left: 85%;
+    top: 80%;
+    animation-delay: 7s;
+    animation-duration: 39s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-150px) rotate(180deg);
+    }
+    100% {
+        transform: translateY(-300px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Card entrance animation */
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Loading animation for transitions */
+.loading-dots {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+    background-color: var(--counter-text);
+    border-radius: 50%;
+    display: inline-block;
+    animation: dots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes dots {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    } 
+    40% { 
+        transform: scale(1.0);
+    }
+}
